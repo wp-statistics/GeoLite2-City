@@ -1,9 +1,17 @@
-# GeoLite2-City
+# GeoLite2-City (MaxMind.com) CDN files
 
-This repository provides an alternatively download when GeoLite2-City.mmdb.gz impossible for download from maxind.com
+GeoLite2-City.mmdb.gz CDN files based on Free Open Source CDN (jsdelivr) 
 
-**Download link**
-
+## Download link
 ```
-https://raw.githubusercontent.com/wp-statistics/GeoLite2-City/master/GeoLite2-City.mmdb.gz
+https://cdn.jsdelivr.net/npm/geolite2-city@1.0.0/GeoLite2-City.mmdb.gz
 ```
+
+## Source
+```
+https://cdn.jsdelivr.net/npm/geolite2-city/
+```
+
+## License
+CC Attribution-ShareAlike 4.0
+
