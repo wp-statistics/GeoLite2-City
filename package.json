@@ -4,7 +4,7 @@
   "description": "Alternative GeoLite2-City.mmdb.gz Database source provided by MaxMind.com",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "repository": {
     "type": "git",
