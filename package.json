@@ -1,0 +1,26 @@
+{
+  "name": "geolite2-city",
+  "version": "1.0.0",
+  "description": "Alternative GeoLite2-City.mmdb.gz Database source provided by MaxMind.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wp-statistics/GeoLite2-City.git"
+  },
+  "keywords": [
+    "geoip",
+    "maxmind",
+    "city",
+    "ip",
+    "location"
+  ],
+  "author": "VeronaLabs",
+  "license": "CC-BY-NC-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/wp-statistics/GeoLite2-City/issues"
+  },
+  "homepage": "https://github.com/wp-statistics/GeoLite2-City#readme"
+}
