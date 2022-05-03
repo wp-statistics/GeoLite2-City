@@ -2,7 +2,6 @@
   "name": "geolite2-city",
   "version": "1.0.0",
   "description": "Alternative GeoLite2-City.mmdb.gz Database source provided by MaxMind.com",
-  "main": "index.js",
   "scripts": {
     "test": ""
   },
