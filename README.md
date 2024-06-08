@@ -2,7 +2,7 @@
 
 GeoLite2-City.mmdb.gz CDN files based on Free Open Source CDN [jsDelivr!](https://www.jsdelivr.com/) 
 
-#### Last updated: 2024-04-10
+#### Last updated: 2024-06-08
 
 ## Download link
 ```
