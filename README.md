@@ -15,4 +15,4 @@ https://cdn.jsdelivr.net/npm/geolite2-city/
 ```
 
 ## License
-[CC Attribution-ShareAlike 4.0](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data?lang=en)
+[Creative Commons Corporation Attribution-ShareAlike 4.0 International License (the "Creative Commons License")](https://creativecommons.org/licenses/by-sa/4.0/)
