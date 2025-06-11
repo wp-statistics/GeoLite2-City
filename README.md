@@ -7,7 +7,7 @@ Since this database is integrated with the WP Statistics plugin, **we currently 
 
 After realizing its potential utility for other developers and projects, we decided to make the database easily accessible via GitHub and the jsDelivr CDN.
 
-#### Last updated: 2025-04-11
+#### Last updated: 2025-06-10
 
 ### Direct Download URL
 You can download the latest version of the GeoLite2-City database using the following link: [GeoLite2-City.mmdb.gz](https://cdn.jsdelivr.net/npm/geolite2-city/GeoLite2-City.mmdb.gz)
