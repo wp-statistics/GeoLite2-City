@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write  # Required for npm trusted publishing (OIDC)
 
     steps:
       - name: Checkout repository
@@ -21,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'  # Node 24 includes npm 11.5.1+ required for OIDC
           registry-url: 'https://registry.npmjs.org'
 
       - name: Download latest GeoLite2-City database
@@ -97,9 +98,7 @@ jobs:
 
       - name: Publish to npm
         if: steps.check_changes.outputs.changed == 'true'
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public
 
       - name: Summary
         run: |
