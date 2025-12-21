@@ -1,0 +1,115 @@
+name: Update GeoLite2-City Database
+
+on:
+  schedule:
+    # Run every Tuesday and Friday at 06:00 UTC (MaxMind update days)
+    - cron: '0 6 * * 2,5'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Download latest GeoLite2-City database
+        env:
+          MAXMIND_LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE_KEY }}
+        run: |
+          echo "Downloading GeoLite2-City database..."
+
+          # Download the database
+          curl -fsSL -o GeoLite2-City.tar.gz \
+            "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${MAXMIND_LICENSE_KEY}&suffix=tar.gz"
+
+          # Check if download was successful
+          if [ ! -f GeoLite2-City.tar.gz ] || [ ! -s GeoLite2-City.tar.gz ]; then
+            echo "Download failed or file is empty"
+            exit 1
+          fi
+
+          # Extract the mmdb file
+          tar -xzf GeoLite2-City.tar.gz
+
+          # Find and move the mmdb file
+          MMDB_FILE=$(find . -name "GeoLite2-City.mmdb" -type f)
+          if [ -z "$MMDB_FILE" ]; then
+            echo "Could not find GeoLite2-City.mmdb in archive"
+            exit 1
+          fi
+
+          mv "$MMDB_FILE" ./GeoLite2-City.mmdb
+
+          # Compress with maximum compression
+          gzip -9 -f GeoLite2-City.mmdb
+
+          # Cleanup
+          rm -rf GeoLite2-City.tar.gz GeoLite2-City_*/
+
+          echo "Database downloaded and compressed successfully"
+          ls -lh GeoLite2-City.mmdb.gz
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet GeoLite2-City.mmdb.gz 2>/dev/null; then
+            echo "No changes detected"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update version and commit
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          # Bump patch version
+          npm version patch --no-git-tag-version
+
+          # Get new version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "New version: $NEW_VERSION"
+
+          # Update README with current date
+          CURRENT_DATE=$(date +%Y-%m-%d)
+          sed -i "s/Last updated: .*/Last updated: ${CURRENT_DATE}/" README.md
+
+          # Configure git
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+          # Commit and push
+          git add .
+          git commit -m "Update GeoLite2-City database to v${NEW_VERSION} - ${CURRENT_DATE}"
+          git push
+
+      - name: Publish to npm
+        if: steps.check_changes.outputs.changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Summary
+        run: |
+          if [ "${{ steps.check_changes.outputs.changed }}" == "true" ]; then
+            echo "### Database Updated Successfully" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- New version published to npm" >> $GITHUB_STEP_SUMMARY
+            echo "- CDN will be updated automatically via jsDelivr" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### No Updates Required" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The database is already up to date." >> $GITHUB_STEP_SUMMARY
+          fi
