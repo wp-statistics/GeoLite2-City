@@ -4,7 +4,13 @@ on:
   schedule:
     # Run every Tuesday and Friday at 06:00 UTC (MaxMind update days)
     - cron: '0 6 * * 2,5'
-  workflow_dispatch: # Manual trigger
+  workflow_dispatch:
+    inputs:
+      force_publish:
+        description: 'Force publish to npm even if no changes'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   update:
@@ -65,7 +71,11 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          if git diff --quiet GeoLite2-City.mmdb.gz 2>/dev/null; then
+          FORCE="${{ inputs.force_publish }}"
+          if [ "$FORCE" == "true" ]; then
+            echo "Force publish requested"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          elif git diff --quiet GeoLite2-City.mmdb.gz 2>/dev/null; then
             echo "No changes detected"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
