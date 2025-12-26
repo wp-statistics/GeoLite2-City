@@ -9,7 +9,7 @@ Free MaxMind GeoLite2-City database for IP geolocation. Get city-level location 
 
 **Website:** [geo.wp-statistics.com](https://geo.wp-statistics.com)
 
-#### Last updated: 2025-12-21
+#### Last updated: 2025-12-26
 
 ---
 
