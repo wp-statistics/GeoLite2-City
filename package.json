@@ -1,6 +1,6 @@
 {
   "name": "geolite2-city",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "GeoLite2-City.mmdb.gz CDN files based on Free Open Source CDN [jsDelivr!](https://www.jsdelivr.com/)",
   "scripts": {
     "test": ""
