@@ -118,6 +118,6 @@ This database is provided by [MaxMind](https://www.maxmind.com/). When using thi
 
 ## License
 
-GeoLite2-City by MaxMind is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+GeoLite2-City by MaxMind is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Use of the data is governed by the [GeoLite End User License Agreement](https://www.maxmind.com/en/geolite2/eula), which incorporates CC BY-SA 4.0. See [NOTICE](NOTICE).
 
 Maintained by [VeronaLabs](https://veronalabs.com) and the [WP Statistics](https://wp-statistics.com) team.
